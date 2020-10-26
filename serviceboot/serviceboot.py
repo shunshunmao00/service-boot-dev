@@ -325,7 +325,7 @@ class GatewayApi(tornado.websocket.WebSocketHandler):
         # 判断请求是否是通过HTTP进行Upgrade的websocket
         if self.request.headers.get("Upgrade", "").lower() == "websocket":
             # 调用相应的app_core来获取代理的upstream上游的websocket connection, 建立上游连接
-            self._up_websocket = await g.app_core.get_up_websocket(self.request)
+            self._up_websocket = await g.app_core.get_up_websocket(self.request, self)
             # 调用父类的get的方法处理websocket请求, 产生响应
             await super().get(*args, **kwargs)
         else:
